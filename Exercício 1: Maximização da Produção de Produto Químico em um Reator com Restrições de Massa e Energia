@@ -1,0 +1,30 @@
+import sympy as sp
+
+# Definindo as variáveis
+A, B, λ, λ2 = sp.symbols('A B λ λ2')
+
+# Função objetivo
+f = 3 * A**0.5 * B**0.5
+
+# Restrições
+g1 = A + B - 10              # Restrição de massa
+g2 = A**2 - B**2 - 18        # Restrição de energia
+
+# Lagrangeana com duas restrições
+L = f + λ * g1 + λ2 * g2
+
+# Derivadas parciais da Lagrangeana em relação a A, B, λ e λ2
+L_A = sp.diff(L, A)
+L_B = sp.diff(L, B)
+L_λ = sp.diff(L, λ)
+L_λ2 = sp.diff(L, λ2)
+
+# Sistema de equações
+equations = [L_A, L_B, L_λ, L_λ2]
+
+# Resolver o sistema
+solutions = sp.solve(equations, (A, B, λ, λ2), dict=True)
+
+# Exibindo as soluções
+for sol in solutions:
+    print(f"Solução: A = {sol[A]}, B = {sol[B]}, λ = {sol[λ]}, λ2 = {sol[λ2]}")
