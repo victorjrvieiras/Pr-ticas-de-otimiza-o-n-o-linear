@@ -1,0 +1,44 @@
+import numpy  as np
+import matplotlib.pyplot as plt
+
+def fun(x):
+  f = 3 + 6*x + 5*x**2 + 3*x**3 + 4*x**4
+  return f
+
+
+xl=-2.0
+xu=1.0
+
+d=((np.sqrt(5)-1)/2)*(xu-xl) # distancia da razao aurea
+tol=0.001 #tolerancia
+erro=100 ## qualquer valor grande
+x1=xl+d
+x2=xu-d
+f1=fun(x1)
+f2=fun(x2)
+cont=0
+result=[10]
+XX=[cont]
+while (erro>tol):
+    cont=cont+1
+    if f1<f2:
+        result.append(f1)
+        xl=x2
+        x2=x1
+        f2=f1
+        x1=xl+((np.sqrt(5)-1)/2)*(xu-xl)
+        f1=fun(x1)
+    else:
+        result.append(f2)
+        xu=x1
+        x1=x2
+        f1=f2
+        x2=xu-((np.sqrt(5)-1)/2)*(xu-xl)
+        f2=fun(x2)
+
+    XX.append(cont)
+    erro=np.abs(xu-xl)
+
+print('Mínimo=',x1)
+plt.figure(1, figsize=[8,5])
+plt.step(XX, result)
